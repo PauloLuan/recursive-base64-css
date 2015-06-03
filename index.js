@@ -90,7 +90,10 @@ module.exports = {
      * Converts an image to base64 string.
      *
      * @param  {String} imagePath - the path of the image that will be converted
-     * @return {String} base64 - the string representation of the image
+     * @return {String} base64
+     *      the string representation of the image, as following the base64 pattern:
+     *      url(data:[<mime type>][;charset=<charset>][;base64],<encoded data>)
+     *      for example: `url(data:image/gif;base64,R0lGODlhQAUjIQA7)`
      */
     imageToBase64: function (imagePath) {
         var fileData = fs.readFileSync(path.join(imagePath));
