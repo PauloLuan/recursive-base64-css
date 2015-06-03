@@ -1,9 +1,24 @@
-var should = require('chai').should(),
-    module = require('../index');
+var chai = require('chai'),
+    chaiAsPromised = require("chai-as-promised"),
+    module = require('../index'),
+    path = require('path'),
+    expect,
+    assert, 
+    should;
+
+chai.use(chaiAsPromised);
+assert = chai.assert;
+should = chai.should();
+expect = chai.expect;
 
 describe('#replaceContent', function () {
+	
+	afterEach(function (done) {
+    	done();
+    });
+
     var regex = /url\(([^\)]+)\)/g;
-        
+
     it('should replace teste123teste to teste654teste ', function () {
         module.replaceContent('teste123teste', '123', '654').should.equal('teste654teste');
     });
@@ -23,12 +38,12 @@ describe('#replaceContent', function () {
     });
 
     it('should replace an original css text', function () {
-       var from = 'li { ' +
+        var from = 'li { ' +
             'background: url("teste/teste/bla/fake")   ' +
             'no-repeat   ' +
             'left center;    ' +
             'padding: 5px 0 5px 25px;  }';
- 
+
         var to = 'url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)';
 
         var expected = 'li { ' +
@@ -38,5 +53,19 @@ describe('#replaceContent', function () {
             'padding: 5px 0 5px 25px;  }';
 
         module.replaceContent(from, regex, to).should.equal(expected);
+    });
+});
+
+describe("#getAllCssFiles", function () {
+
+    it("should return 3 as a length", function (done) {
+    	var cssPath = path.join(__dirname, 'input');
+
+    	return module.getAllCssFiles(cssPath)
+    		.then(function(files) {
+    			files.should.to.be.ok.and.not.be.empty;
+	    		files.length.should.equal(3);
+	    		done();
+	    	});
     });
 });
