@@ -54,11 +54,11 @@ module.exports = {
     getAllCssFiles: function (destinationPath) {
         var deferred = Q.defer();
 
-        var destPath = path.join(destinationPath + "/*.css");
+        var destPath = path.join(destinationPath + "/**/*.css");
         glob(destPath, function (err, files) {
             if (err) {
                 //console.log("Error: ", err);
-                deferred.reject();
+                deferred.reject(err);
             } else {
                 deferred.resolve(files);
             }
@@ -81,7 +81,6 @@ module.exports = {
      * @returns {string}
      */
     replaceContent: function (inputContent, findWhat, replaceWith) {
-        //var content = String(file.contents).replace(/inline\(([^\)]+)\)/g, inline);
         var content = String(inputContent).replace(findWhat, replaceWith);
         return content;
     },
