@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Recursive CSS base64 inline
  * https://github.com/PauloLuan/recursive-base64-css
@@ -40,6 +41,13 @@ module.exports = {
 		assert.equal(typeof options, 'object', 'base64: options should be object');
     },
 
+    /**
+     *
+     * Search recursivelly into a directory and returns all files that matches the searched file extension (.css).
+     *
+     * @param destinationPath - the css path
+     * @returns {promise|*|Q.promise}
+     */
     getAllCssFiles: function (destinationPath) {
     	var deferred = Q.defer();
 
@@ -56,8 +64,23 @@ module.exports = {
     },
 
     inlineCssImages: function (cssFile) {
-    	
+
     },
+
+    /**
+     *
+     * Search and replace a text/regex on an input content.
+     *
+     * @param inputContent - hte input content of the file
+     * @param findWhat - the searched text or regex
+     * @param replaceWith - the expected text that will be the replace
+     * @returns {string}
+     */
+    replaceContent: function(inputContent, findWhat, replaceWith) {
+    	//var content = String(file.contents).replace(/inline\(([^\)]+)\)/g, inline);
+	    var content = String(inputContent).replace(findWhat, replaceWith);
+	    return content;
+    }
 
     /**
      * Converts an image to base64 string.
