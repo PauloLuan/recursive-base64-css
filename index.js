@@ -80,7 +80,7 @@ module.exports = {
     	//var content = String(file.contents).replace(/inline\(([^\)]+)\)/g, inline);
 	    var content = String(inputContent).replace(findWhat, replaceWith);
 	    return content;
-    }
+    },
 
     /**
      * Converts an image to base64 string.
