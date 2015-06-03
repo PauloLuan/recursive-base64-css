@@ -10,6 +10,8 @@
 var assert = require("assert");
 var path = require("path");
 var fs = require("fs");
+var mime = require('mime');
+
 var glob = require("glob");
 var _ = require("lodash");
 var Q = require("q");
