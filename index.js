@@ -15,12 +15,29 @@ var Q = require("q");
 
 module.exports = {
     init: function (destinationPath, options) {
+        options.path = destinationPath;
         options = options || {};
 
-        assert(destinationPath, 'base64: missing path');
-        assert.equal(typeof destinationPath, 'string', 'base64: path should be a string');
-        assert(options, 'base64: missing options');
-        assert.equal(typeof options, 'object', 'base64: options should be object');
+        try {
+	        verifyOptions(options);
+
+	        getAllCssFiles(destinationPath)
+	        	.then(function(files) {
+	        		_.forEach(files, function(value, key) {
+	        			inlineCssImages(value);
+	        		});
+	        	});
+
+        } catch(exception) {
+        	console.log("error: ", exception);
+        }
+    },
+
+    verifyOptions: function(options) {
+		assert(options.path, 'base64: missing path');
+		assert.equal(typeof destinationPath, 'string', 'base64: path should be a string');
+		assert(options, 'base64: missing options');
+		assert.equal(typeof options, 'object', 'base64: options should be object');
     },
 
     getAllCssFiles: function (destinationPath) {
@@ -39,7 +56,7 @@ module.exports = {
     },
 
     inlineCssImages: function (cssFile) {
-
+    	
     },
 
     /**
