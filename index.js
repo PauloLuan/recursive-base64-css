@@ -22,25 +22,25 @@ module.exports = {
         options = options || {};
 
         try {
-	        verifyOptions(options);
+            verifyOptions(options);
 
-	        getAllCssFiles(destinationPath)
-	        	.then(function(files) {
-	        		_.forEach(files, function(value, key) {
-	        			inlineCssImages(value);
-	        		});
-	        	});
+            getAllCssFiles(destinationPath)
+                .then(function (files) {
+                    _.forEach(files, function (value, key) {
+                        inlineCssImages(value);
+                    });
+                });
 
-        } catch(exception) {
-        	console.log("error: ", exception);
+        } catch (exception) {
+            console.log("error: ", exception);
         }
     },
 
-    verifyOptions: function(options) {
-		assert(options.path, 'base64: missing path');
-		assert.equal(typeof destinationPath, 'string', 'base64: path should be a string');
-		assert(options, 'base64: missing options');
-		assert.equal(typeof options, 'object', 'base64: options should be object');
+    verifyOptions: function (options) {
+        assert(options.path, 'base64: missing path');
+        assert.equal(typeof destinationPath, 'string', 'base64: path should be a string');
+        assert(options, 'base64: missing options');
+        assert.equal(typeof options, 'object', 'base64: options should be object');
     },
 
     /**
@@ -48,17 +48,19 @@ module.exports = {
      * Search recursivelly into a directory and returns all files that matches the searched file extension (.css).
      *
      * @param destinationPath - the css path
-     * @returns {promise|*|Q.promise}
+     * @returns {Promisse.<string[]>} files - the css files.
+     * @rejects {ValidationError} if the input is too long
      */
     getAllCssFiles: function (destinationPath) {
-    	var deferred = Q.defer();
+        var deferred = Q.defer();
 
         var destPath = path.join(destinationPath + "/*.css");
-        glob(destPath, function (er, files) {
+        glob(destPath, function (err, files) {
             if (err) {
-                console.log("Error: ", err);
+                //console.log("Error: ", err);
+                deferred.reject();
             } else {
-            	deferred.resolve(files);
+                deferred.resolve(files);
             }
         });
 
@@ -78,10 +80,10 @@ module.exports = {
      * @param replaceWith - the expected text that will be the replace
      * @returns {string}
      */
-    replaceContent: function(inputContent, findWhat, replaceWith) {
-    	//var content = String(file.contents).replace(/inline\(([^\)]+)\)/g, inline);
-	    var content = String(inputContent).replace(findWhat, replaceWith);
-	    return content;
+    replaceContent: function (inputContent, findWhat, replaceWith) {
+        //var content = String(file.contents).replace(/inline\(([^\)]+)\)/g, inline);
+        var content = String(inputContent).replace(findWhat, replaceWith);
+        return content;
     },
 
     /**
