@@ -7,14 +7,14 @@
  * Licensed under the MIT license.
  */
 
-var assert = require("assert");
-var path = require("path");
-var fs = require("fs");
-var mime = require('mime');
-
-var glob = require("glob");
-var _ = require("lodash");
-var Q = require("q");
+var assert = require("assert"),
+    path = require("path"),
+    fs = require("fs"),
+    mime = require('mime'),
+    glob = require("glob"),
+    _ = require("lodash"),
+    mkdirp = require('mkdirp'),
+    Q = require("q");
 
 module.exports = {
     init: function (destinationPath, options) {
@@ -69,6 +69,21 @@ module.exports = {
 
     inlineCssImages: function (cssFile) {
 
+    },
+
+    /**
+     *
+     * Writes the content to a file on the output folder.
+     *
+     */
+    writeFileToOutputFolder: function (filePath, content) {
+        var outputPath = path.resolve("output");
+        var relativeOutput = path.relative(path.resolve(), filePath);
+        var outputFilePath = path.join(outputPath, relativeOutput);
+
+        mkdirp.sync(path.dirname(outputFilePath));
+        var text = content.toString('utf-8');
+        fs.createWriteStream(outputFilePath).write(text);
     },
 
     /**
