@@ -1,36 +1,36 @@
 {
-  "name": "recursive-base64-css",
-  "version": "0.0.1",
-  "description": "Recursive walk through directories and Inline all css images with base64",
-  "main": "index.js",
-  "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/PauloLuan/recursive-base64-css.git"
-  },
-  "keywords": [
-    "base64",
-    "css",
-    "recursive"
-  ],
-  "author": "Paulo Luan <pauloluan.inova@gmail.com> (http://pauloluan.github.io/)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/PauloLuan/recursive-base64-css/issues"
-  },
-  "homepage": "https://github.com/PauloLuan/recursive-base64-css",
-  "devDependencies": {
-    "chai": "^2.3.0",
-    "mocha": "^2.2.5"
-  },
-  "dependencies": {
-    "chai-as-promised": "^5.0.0",
-    "glob": "^5.0.10",
-    "lodash": "^3.9.3",
-    "mime": "^1.3.4",
-    "mkdirp": "^0.5.1",
-    "q": "^1.4.1"
-  }
+    "name": "recursive-base64-css",
+    "version": "0.0.1",
+    "description": "Recursive walk through directories and Inline all css images with base64",
+    "main": "index.js",
+    "scripts": {
+        "test": "./node_modules/.bin/mocha --reporter spec"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/PauloLuan/recursive-base64-css.git"
+    },
+    "keywords": [
+        "base64",
+        "css",
+        "recursive"
+    ],
+    "author": "Paulo Luan <pauloluan.inova@gmail.com> (http://pauloluan.github.io/)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/PauloLuan/recursive-base64-css/issues"
+    },
+    "homepage": "https://github.com/PauloLuan/recursive-base64-css",
+    "devDependencies": {
+        "chai": "^2.3.0",
+        "mocha": "^2.2.5"
+    },
+    "dependencies": {
+        "chai-as-promised": "^5.0.0",
+        "glob": "^5.0.10",
+        "lodash": "^3.9.3",
+        "mime": "^1.3.4",
+        "mkdirp": "^0.5.1",
+        "q": "^1.4.1"
+    }
 }
