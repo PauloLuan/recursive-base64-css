@@ -2,8 +2,10 @@ var chai = require('chai'),
     chaiAsPromised = require("chai-as-promised"),
     module = require('../index'),
     path = require('path'),
+    _ = require("lodash"),
+    fs = require('fs'),
     expect,
-    assert, 
+    assert,
     should;
 
 chai.use(chaiAsPromised);
@@ -12,9 +14,9 @@ should = chai.should();
 expect = chai.expect;
 
 describe('#replaceContent', function () {
-	
-	afterEach(function (done) {
-    	done();
+
+    afterEach(function (done) {
+        done();
     });
 
     var regex = /url\(([^\)]+)\)/g;
@@ -59,13 +61,64 @@ describe('#replaceContent', function () {
 describe("#getAllCssFiles", function () {
 
     it("should return 3 as a length", function (done) {
-    	var cssPath = path.join(__dirname, 'input');
+        var cssPath = path.join(__dirname, 'input');
 
-    	return module.getAllCssFiles(cssPath)
-    		.then(function(files) {
-    			files.should.to.be.ok.and.not.be.empty;
-	    		files.length.should.equal(3);
-	    		done();
-	    	});
+        return module.getAllCssFiles(cssPath)
+            .then(function (files) {
+                files.should.to.be.ok;
+                files.should.not.be.empty;
+                files.length.should.equal(3);
+                done();
+            });
     });
 });
+
+describe("#getAllCssFiles", function () {
+
+    it("should return 3 as a length", function (done) {
+        var cssPath = path.join(__dirname, 'input');
+
+        return module.getAllCssFiles(cssPath)
+            .then(function (files) {
+                files.should.to.be.ok;
+                files.should.not.be.empty;
+                files.length.should.equal(3);
+                done();
+            });
+    });
+});
+
+describe("#writeFileToOutputFolder", function () {
+
+    it("should create the same structure as the demo folder", function (done) {
+        var inputFiles,
+            outputFiles,
+            inputPath;
+
+        inputPath = path.join(__dirname, 'input');
+
+        module.getAllCssFiles(inputPath)
+
+            .then(function (files) {
+                inputFiles = files;
+
+                _.forEach(inputFiles, function (value, key) {
+                    var content = fs.readFileSync(value);
+                    module.writeFileToOutputFolder(value, content);
+                });
+            })
+
+            .then(function () {
+                var outputPath = path.join(__dirname, '../output');
+
+                module.getAllCssFiles(outputPath)
+                    .then(function (files) {
+                        outputFiles = files;
+                        (outputFiles.length).should.equal(inputFiles.length);
+                        done();
+                    });
+            });
+    });
+});
+
+
