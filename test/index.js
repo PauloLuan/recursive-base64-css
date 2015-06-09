@@ -1,17 +1,8 @@
-var chai = require('chai'),
-    chaiAsPromised = require("chai-as-promised"),
-    module = require('../index'),
+var module = require('../index'),
     path = require('path'),
     _ = require("lodash"),
     fs = require('fs'),
-    expect,
-    assert,
-    should;
-
-chai.use(chaiAsPromised);
-assert = chai.assert;
-should = chai.should();
-expect = chai.expect;
+    should = require("should");
 
 describe('#replaceContent', function () {
 
@@ -65,9 +56,8 @@ describe("#getAllCssFiles", function () {
 
         return module.getAllCssFiles(cssPath)
             .then(function (files) {
-                files.should.to.be.ok;
-                files.should.not.be.empty;
-                files.length.should.equal(3);
+                files.should.be.not.empty;
+                files.should.have.length(3);
                 done();
             });
     });
@@ -80,9 +70,8 @@ describe("#getAllCssFiles", function () {
 
         return module.getAllCssFiles(cssPath)
             .then(function (files) {
-                files.should.to.be.ok;
-                files.should.not.be.empty;
-                files.length.should.equal(3);
+                files.should.be.not.empty;
+                files.should.have.length(3);
                 done();
             });
     });
@@ -114,7 +103,7 @@ describe("#writeFileToOutputFolder", function () {
                 module.getAllCssFiles(outputPath)
                     .then(function (files) {
                         outputFiles = files;
-                        (outputFiles.length).should.equal(inputFiles.length);
+                        outputFiles.should.have.length(inputFiles.length);
                         done();
                     });
             });
@@ -123,20 +112,20 @@ describe("#writeFileToOutputFolder", function () {
 
 describe("#getQuotedContent", function () {
 
-    it("should get only quoted content", function (done) {
+    it("should get only quoted content", function () {
         var simpleQuote = "the word you need is 'hello' ";
-        var simpleQuoteResult = module.getQuotedContent(simpleQuote)
-        simpleQuoteResult.should.equal('hello');
+        var simpleQuoteResult = module.getQuotedContent(simpleQuote);
+        simpleQuoteResult.should.be.equal('hello');
 
         var doubleQuote = 'the word you need is "hello" ';
-        var doubleQuoteResult = module.getQuotedContent(doubleQuote)
-        doubleQuote.should.equal('hello');
+        var doubleQuoteResult = module.getQuotedContent(doubleQuote);
+        doubleQuoteResult.should.be.equal('hello');
     });
 });
 
 describe("#getAllImagesTags", function () {
 
-    it("should get all image tags from a mock css text", function (done) {
+    it("should get all image tags from a mock css text", function () {
         var mockCss = 'li { ' +
             'background: url("teste/teste/bla/fake")   ' +
             'no-repeat   ' +
@@ -144,8 +133,8 @@ describe("#getAllImagesTags", function () {
             'padding: 5px 0 5px 25px;  }';
 
         var result = module.getAllImagesTags(mockCss);
-        expect(result).to.be.not.empty;
-        expect(result).to.have.length(1);
+        result.should.be.not.empty;
+        result.should.have.length(1);
     });
 });
 
