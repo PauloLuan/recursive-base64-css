@@ -14,33 +14,46 @@ var assert = require("assert"),
     glob = require("glob"),
     _ = require("lodash"),
     mkdirp = require('mkdirp'),
-    Q = require("q");
+    Q = require("q"),
+    self;
 
 module.exports = {
     init: function (destinationPath, options) {
-        options.path = destinationPath;
+        var deferred = Q.defer();
+        self = this;
+
         options = options || {};
+        options.path = destinationPath;
 
         try {
-            verifyOptions(options);
+            self.verifyOptions(options);
 
-            getAllCssFiles(destinationPath)
+            self.getAllCssFiles(destinationPath)
                 .then(function (files) {
-                    _.forEach(files, function (value, key) {
-                        inlineCssImages(value);
+                    _.forEach(files, function (cssPath, key) {
+                        assert.equal(fs.existsSync(cssPath), true, 'path should exist');
+                        
+                        var content = fs.readFileSync(cssPath).toString('utf-8');
+                        var inlinedContent = self.inlineCssImages(content, cssPath);
+
+                        self.writeFileToOutputFolder(cssPath, inlinedContent);
+                        deferred.resolve(inlinedContent);
                     });
                 });
 
         } catch (exception) {
+            deferred.reject(exception);
             console.log("error: ", exception);
         }
+
+        return deferred.promise;
     },
 
     verifyOptions: function (options) {
-        assert(options.path, 'base64: missing path');
-        assert.equal(typeof destinationPath, 'string', 'base64: path should be a string');
         assert(options, 'base64: missing options');
         assert.equal(typeof options, 'object', 'base64: options should be object');
+        assert(options.path, 'base64: missing path');
+        assert.equal(typeof options.path, 'string', 'base64: path should be a string');
     },
 
     /**
@@ -67,18 +80,23 @@ module.exports = {
         return deferred.promise;
     },
 
-    inlineCssImages: function (cssFile) {
-        var content = fs.readFileSync(cssFile);
-        var tags = getAllImagesTags(content);
+    inlineCssImages: function (content, cssPath) {
+        var tags = self.getAllImagesTags(content);
 
+        /* each all url tag items */
         _.forEach(tags, function (value, index) {
-            var imagePath = getQuotedContent(value); // gets only the quoted content
-            imageToBase64(imagePath);
+            var imagePath = self.getQuotedContent(value); // gets only the quoted content, that is the path of the image
+            var resolvedPath = path.resolve(path.dirname(cssPath), imagePath);
+            assert.equal(fs.existsSync(resolvedPath), true, 'path should exist.');
+            var base64 = self.imageToBase64(resolvedPath);
+            content = self.replaceContent(content, value, base64);
         });
+
+        return content;
     },
 
     getQuotedContent: function (text) {
-        var match = text.match(/\'(.*?)\'/) || text.match(/\"(.*?)\"/);
+        var match = text.match(/\((.*?)\)/);
         if (match) match = match[1];
         return match;
     },
