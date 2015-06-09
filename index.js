@@ -68,7 +68,25 @@ module.exports = {
     },
 
     inlineCssImages: function (cssFile) {
+        var content = fs.readFileSync(cssFile);
+        var tags = getAllImagesTags(content);
 
+        _.forEach(tags, function (value, index) {
+            var imagePath = getQuotedContent(value); // gets only the quoted content
+            imageToBase64(imagePath);
+        });
+    },
+
+    getQuotedContent: function (text) {
+        var match = text.match(/\'(.*?)\'/) || text.match(/\"(.*?)\"/);
+        if (match) match = match[1];
+        return match;
+    },
+
+    getAllImagesTags: function (content) {
+        var regex = /url\(([^\)]+)\)/g;
+        var result = content.match(regex);
+        return result;
     },
 
     /**
