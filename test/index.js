@@ -113,13 +113,9 @@ describe("#writeFileToOutputFolder", function () {
 describe("#getQuotedContent", function () {
 
     it("should get only quoted content", function () {
-        var simpleQuote = "the word you need is 'hello' ";
+        var simpleQuote = "the word you need is (hello) ";
         var simpleQuoteResult = module.getQuotedContent(simpleQuote);
         simpleQuoteResult.should.be.equal('hello');
-
-        var doubleQuote = 'the word you need is "hello" ';
-        var doubleQuoteResult = module.getQuotedContent(doubleQuote);
-        doubleQuoteResult.should.be.equal('hello');
     });
 });
 
@@ -136,6 +132,32 @@ describe("#getAllImagesTags", function () {
         result.should.be.not.empty;
         result.should.have.length(1);
     });
+
+    it("should get 2 image tags", function () {
+        var mockCss = 'li { ' +
+            'background: url("teste/teste/bla/fake")   ' +
+            'background: url("teste/bla/fake2")   ' +
+            'left center;    ' +
+            'padding: 5px 0 5px 25px;  }';
+
+        var result = module.getAllImagesTags(mockCss);
+        result.should.be.not.empty;
+        result.should.have.length(2);
+    });
 });
 
+describe("#init", function () {
+    this.timeout(5000);
 
+    it("should execute the main function in order to execute the complete cycle of the app.", function (done) {
+        var inputPath = path.join(__dirname, 'input');
+
+        return module.init(inputPath, {})
+            .then(function(result) {
+                done();
+            }).catch(function (error) {
+                console.log(error);
+                done();
+            })
+    });
+});
