@@ -121,15 +121,31 @@ describe("#writeFileToOutputFolder", function () {
     });
 });
 
-
 describe("#getQuotedContent", function () {
 
-    it("should return 3 as a length", function (done) {
+    it("should get only quoted content", function (done) {
         var simpleQuote = "the word you need is 'hello' ";
-        var anotherSimpleQuote = 'the word you need is "hello" ';
+        var simpleQuoteResult = module.getQuotedContent(simpleQuote)
+        simpleQuoteResult.should.equal('hello');
 
-        module.getQuotedContent(simpleQuote).should.be.eql('hello');
-        module.getQuotedContent(anotherSimpleQuote).should.be.eql('hello');
+        var doubleQuote = 'the word you need is "hello" ';
+        var doubleQuoteResult = module.getQuotedContent(doubleQuote)
+        doubleQuote.should.equal('hello');
+    });
+});
+
+describe("#getAllImagesTags", function () {
+
+    it("should get all image tags from a mock css text", function (done) {
+        var mockCss = 'li { ' +
+            'background: url("teste/teste/bla/fake")   ' +
+            'no-repeat   ' +
+            'left center;    ' +
+            'padding: 5px 0 5px 25px;  }';
+
+        var result = module.getAllImagesTags(mockCss);
+        expect(result).to.be.not.empty;
+        expect(result).to.have.length(1);
     });
 });
 
