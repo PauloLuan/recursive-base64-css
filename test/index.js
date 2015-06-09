@@ -122,3 +122,15 @@ describe("#writeFileToOutputFolder", function () {
 });
 
 
+describe("#getQuotedContent", function () {
+
+    it("should return 3 as a length", function (done) {
+        var simpleQuote = "the word you need is 'hello' ";
+        var anotherSimpleQuote = 'the word you need is "hello" ';
+
+        module.getQuotedContent(simpleQuote).should.be.eql('hello');
+        module.getQuotedContent(anotherSimpleQuote).should.be.eql('hello');
+    });
+});
+
+
