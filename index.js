@@ -7,14 +7,14 @@
  * Licensed under the MIT license.
  */
 
-var assert = require("assert"),
-    path = require("path"),
-    fs = require("fs"),
+var assert = require('assert'),
+    path = require('path'),
+    fs = require('fs'),
     mime = require('mime'),
-    glob = require("glob"),
-    _ = require("lodash"),
+    glob = require('glob'),
+    _ = require('lodash'),
     mkdirp = require('mkdirp'),
-    Q = require("q"),
+    Q = require('q'),
     self;
 
 module.exports = {
@@ -32,7 +32,7 @@ module.exports = {
                 .then(function (files) {
                     _.forEach(files, function (cssPath, key) {
                         assert.equal(fs.existsSync(cssPath), true, 'path should exist');
-                        
+
                         var content = fs.readFileSync(cssPath).toString('utf-8');
                         var inlinedContent = self.inlineCssImages(content, cssPath);
 
@@ -43,7 +43,7 @@ module.exports = {
 
         } catch (exception) {
             deferred.reject(exception);
-            console.log("error: ", exception);
+            console.log('error: ', exception);
         }
 
         return deferred.promise;
@@ -61,13 +61,13 @@ module.exports = {
      * Search recursivelly into a directory and returns all files that matches the searched file extension (.css).
      *
      * @param destinationPath - the css path
-     * @returns {Promisse.<string[]>} files - the css files.
+     * @return {Promisse.<string[]>} files - the css files.
      * @rejects {ValidationError} if the input is too long
      */
     getAllCssFiles: function (destinationPath) {
         var deferred = Q.defer();
 
-        var destPath = path.join(destinationPath + "/**/*.css");
+        var destPath = path.join(destinationPath + '/**/*.css');
         glob(destPath, function (err, files) {
             if (err) {
                 //console.log("Error: ", err);
@@ -113,7 +113,7 @@ module.exports = {
      *
      */
     writeFileToOutputFolder: function (filePath, content) {
-        var outputPath = path.resolve("output");
+        var outputPath = path.resolve('output');
         var relativeOutput = path.relative(path.resolve(), filePath);
         var outputFilePath = path.join(outputPath, relativeOutput);
 
@@ -129,7 +129,7 @@ module.exports = {
      * @param inputContent - hte input content of the file
      * @param findWhat - the searched text or regex
      * @param replaceWith - the expected text that will be the replace
-     * @returns {string}
+     * @return {string}
      */
     replaceContent: function (inputContent, findWhat, replaceWith) {
         var content = String(inputContent).replace(findWhat, replaceWith);

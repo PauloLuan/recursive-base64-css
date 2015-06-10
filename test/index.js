@@ -1,8 +1,8 @@
 var module = require('../index'),
     path = require('path'),
-    _ = require("lodash"),
+    _ = require('lodash'),
     fs = require('fs'),
-    should = require("should");
+    should = require('should');
 
 describe('#replaceContent', function () {
 
@@ -49,9 +49,9 @@ describe('#replaceContent', function () {
     });
 });
 
-describe("#getAllCssFiles", function () {
+describe('#getAllCssFiles', function () {
 
-    it("should return 3 as a length", function (done) {
+    it('should return 3 as a length', function (done) {
         var cssPath = path.join(__dirname, 'input');
 
         return module.getAllCssFiles(cssPath)
@@ -63,9 +63,9 @@ describe("#getAllCssFiles", function () {
     });
 });
 
-describe("#getAllCssFiles", function () {
+describe('#getAllCssFiles', function () {
 
-    it("should return 3 as a length", function (done) {
+    it('should return 3 as a length', function (done) {
         var cssPath = path.join(__dirname, 'input');
 
         return module.getAllCssFiles(cssPath)
@@ -77,9 +77,9 @@ describe("#getAllCssFiles", function () {
     });
 });
 
-describe("#writeFileToOutputFolder", function () {
+describe('#writeFileToOutputFolder', function () {
 
-    it("should create the same structure as the demo folder", function (done) {
+    it('should create the same structure as the demo folder', function (done) {
         var inputFiles,
             outputFiles,
             inputPath;
@@ -110,18 +110,18 @@ describe("#writeFileToOutputFolder", function () {
     });
 });
 
-describe("#getQuotedContent", function () {
+describe('#getQuotedContent', function () {
 
-    it("should get only quoted content", function () {
-        var simpleQuote = "the word you need is (hello) ";
+    it('should get only quoted content', function () {
+        var simpleQuote = 'the word you need is (hello) ';
         var simpleQuoteResult = module.getQuotedContent(simpleQuote);
         simpleQuoteResult.should.be.equal('hello');
     });
 });
 
-describe("#getAllImagesTags", function () {
+describe('#getAllImagesTags', function () {
 
-    it("should get all image tags from a mock css text", function () {
+    it('should get all image tags from a mock css text', function () {
         var mockCss = 'li { ' +
             'background: url("teste/teste/bla/fake")   ' +
             'no-repeat   ' +
@@ -133,7 +133,7 @@ describe("#getAllImagesTags", function () {
         result.should.have.length(1);
     });
 
-    it("should get 2 image tags", function () {
+    it('should get 2 image tags', function () {
         var mockCss = 'li { ' +
             'background: url("teste/teste/bla/fake")   ' +
             'background: url("teste/bla/fake2")   ' +
@@ -146,18 +146,18 @@ describe("#getAllImagesTags", function () {
     });
 });
 
-describe("#init", function () {
+describe('#init', function () {
     this.timeout(5000);
 
-    it("should execute the main function in order to execute the complete cycle of the app.", function (done) {
+    it('should execute the main function in order to execute the complete cycle of the app.', function (done) {
         var inputPath = path.join(__dirname, 'input');
 
         return module.init(inputPath, {})
-            .then(function(result) {
+            .then(function (result) {
                 done();
             }).catch(function (error) {
                 console.log(error);
                 done();
-            })
+            });
     });
 });
