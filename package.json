@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "description": "Recursive walk through directories and Inline all css images with base64",
     "main": "index.js",
+    "bin": "./bin.js",
     "scripts": {
         "test": "./node_modules/.bin/mocha --reporter spec"
     },
