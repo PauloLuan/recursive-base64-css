@@ -6,6 +6,12 @@ Recursive walk through directories and Inline all css images to base64.
 
 [![Build Status](https://travis-ci.org/PauloLuan/recursive-base64-css.svg)](https://travis-ci.org/PauloLuan/recursive-base64-css)
 
+Install this globally and you'll have access to the recursive-base64-css command anywhere on your system.
+
+	npm install -g recursive-base64-css
+
+Then run the command `recursive-base64-css <path>` and the application will create a folder called `output` that will have the same css files as the `<path>` param, but with base64 content on all `url('path')` tags. 
+
 # Development
 
 Install the dependencies:
