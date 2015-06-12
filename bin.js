@@ -30,11 +30,11 @@ if (help || args.length === 0) {
     process.exit(help ? 0 : 1);
 } else {
     /*
-    args.forEach(function (arg) {
-        console.log("args: ", arg);
-        //base64_module.sync(arg);
-    });
-    */
+     args.forEach(function (arg) {
+     console.log("args: ", arg);
+     //base64_module.sync(arg);
+     });
+     */
 
     base64_module.init(args[0], args);
 }

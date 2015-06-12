@@ -13,6 +13,7 @@ var assert = require('assert'),
     mime = require('mime'),
     glob = require('glob'),
     _ = require('lodash'),
+    colors = require('colors'),
     mkdirp = require('mkdirp'),
     Q = require('q'),
     self;
@@ -30,14 +31,20 @@ module.exports = {
 
             self.getAllCssFiles(destinationPath)
                 .then(function (files) {
+
+                    console.log(('Preparing ' + files.length + ' files to process.').yellow);
+
                     _.forEach(files, function (cssPath, key) {
-                        assert.equal(fs.existsSync(cssPath), true, 'path should exist');
+                        assert.equal(fs.existsSync(cssPath), true, 'path should exist'.red);
+                        console.log(('Processing: ' + cssPath).yellow);
 
                         var content = fs.readFileSync(cssPath).toString('utf-8');
                         var inlinedContent = self.inlineCssImages(content, cssPath);
 
                         self.writeFileToOutputFolder(cssPath, inlinedContent);
                         deferred.resolve(inlinedContent);
+
+                        console.log((cssPath + ' has been finished!').green);
                     });
                 });
 
@@ -70,7 +77,7 @@ module.exports = {
         var destPath = path.join(destinationPath + '/**/*.css');
         glob(destPath, function (err, files) {
             if (err) {
-                //console.log("Error: ", err);
+                console.log("Error: ", err);
                 deferred.reject(err);
             } else {
                 deferred.resolve(files);
@@ -113,6 +120,8 @@ module.exports = {
      *
      */
     writeFileToOutputFolder: function (filePath, content) {
+        console.log(('writing ' + filePath + ' file to output folder: ').yellow);
+
         var outputPath = path.resolve('output');
         var relativeOutput = path.relative(path.resolve(), filePath);
         var outputFilePath = path.join(outputPath, relativeOutput);
