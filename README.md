@@ -3,8 +3,9 @@
 Recursive walk through directories and Inline all css images to base64.
 
 [![NPM](https://nodei.co/npm/recursive-base64-css.png)](https://nodei.co/npm/recursive-base64-css/)
+
 [![Build Status](https://travis-ci.org/PauloLuan/recursive-base64-css.svg)](https://travis-ci.org/PauloLuan/recursive-base64-css)
-[![Coverage Status](https://coveralls.io/repos//PauloLuan/recursive-base64-css/badge.svg?branch=master)](https://coveralls.io/r//PauloLuan/recursive-base64-css?branch=master)
+[![Coverage Status](https://coveralls.io/repos/PauloLuan/recursive-base64-css/badge.svg)](https://coveralls.io/r/PauloLuan/recursive-base64-css)
 [![bitHound Score](https://www.bithound.io/github/PauloLuan/recursive-base64-css/badges/score.svg)](https://www.bithound.io/github/PauloLuan/recursive-base64-css)
 [![Dependency Status](https://david-dm.org/PauloLuan/recursive-base64-css.svg "Dependencies Checked & Updated Regularly (Security is Important!)")](https://david-dm.org/PauloLuan/recursive-base64-css)
 
