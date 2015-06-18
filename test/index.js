@@ -103,6 +103,25 @@ describe('#getQuotedContent', function () {
         var simpleQuoteResult = module.getQuotedContent(simpleQuote);
         simpleQuoteResult.should.be.equal('hello');
     });
+
+    it('should get three different kinds of quoted content', function () {
+        var mockCss = 'background: url("teste/teste/bla/fake")   ' +
+            'background: url(\'teste/bla/fake2\')   ' +
+            'background: url(teste/bla/fake3)   ';
+
+        var result = module.getAllImagesTags(mockCss);
+        result.should.be.not.empty;
+        result.should.have.length(3);
+    
+        var result0 = module.getQuotedContent(result[0]);
+        result0.should.be.equal('teste/teste/bla/fake');
+
+        var result1 = module.getQuotedContent(result[1]);
+        result1.should.be.equal('teste/bla/fake2');
+
+        var result2 = module.getQuotedContent(result[2]);
+        result2.should.be.equal('teste/bla/fake3');
+    });
 });
 
 describe('#getAllImagesTags', function () {
@@ -129,6 +148,16 @@ describe('#getAllImagesTags', function () {
         var result = module.getAllImagesTags(mockCss);
         result.should.be.not.empty;
         result.should.have.length(2);
+    });
+
+    it('should get 3 different kind of image tags', function () {
+        var mockCss = 'background: url("teste/teste/bla/fake")   ' +
+            'background: url(\'teste/bla/fake2\')   ' +
+            'background: url(teste/bla/fake3)   ';
+
+        var result = module.getAllImagesTags(mockCss);
+        result.should.be.not.empty;
+        result.should.have.length(3);
     });
 });
 
