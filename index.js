@@ -104,7 +104,10 @@ module.exports = {
 
     getQuotedContent: function (text) {
         var match = text.match(/\((.*?)\)/);
-        if (match) match = match[1];
+        if (match) {
+            match = match[1];
+            match = match.replace(/["']/g, "");
+        }
         return match;
     },
 
