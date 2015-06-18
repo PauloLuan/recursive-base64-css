@@ -1,6 +1,6 @@
 {
     "name": "recursive-base64-css",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Recursive walk through directories and Inline all css images with base64",
     "main": "index.js",
     "bin": "./bin.js",
